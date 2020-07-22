@@ -1,8 +1,9 @@
+import 'package:chatapp/helper/user_list.dart';
 import 'package:chatapp/screens/call_info_screen.dart';
 import 'package:chatapp/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 
-Widget chatCard(BuildContext context, String name,String time,String query,int count, String img){
+Widget chatCard(BuildContext context, String name,String time,String query,int count, String img,  void callback(int i),int i, void root(int i)){
 
   double opacity = 0;
   if(count>0){
@@ -11,6 +12,9 @@ Widget chatCard(BuildContext context, String name,String time,String query,int c
 
   return InkWell(
     onTap: (){
+      callback(i);
+      UserList.count -= count;
+      root(count);
       Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen(name,img)),);
     },
     child: Column(
@@ -93,7 +97,7 @@ Widget chatCard(BuildContext context, String name,String time,String query,int c
   );
 }
 
-Widget callCard(BuildContext context, String name, String lastCall, String query, String img){
+Widget callCard(BuildContext context, String name, String lastCall, String query, String img,){
   return InkWell(
     onTap: (){
       Navigator.push(context, MaterialPageRoute(builder: (context) => CallInfo(name,img)),);

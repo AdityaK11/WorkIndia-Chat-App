@@ -29,6 +29,18 @@ class _HomePageState extends State<HomePage> {
     users = new UserList().getUsers();
   }
 
+  void root(int i){
+    setState(() {
+      total -= i;
+      if(total<0){
+        total = 0;
+      }
+      if(total==0){
+        visibility = false;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -114,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                           child: Container(
                             child: TabBarView(
                                 children: [
-                                  ChatFragment(),
+                                  ChatFragment(root),
                                   CallFragment()
                                 ]
                             ),
@@ -165,7 +177,7 @@ class DataSearch extends SearchDelegate<String>{
     return ListView.builder(
         itemCount: users.length,
         itemBuilder: (BuildContext ctxt, int index) {
-          return chatCard(context,users.elementAt(index).name,users.elementAt(index).recent,"",0,users.elementAt(index).img);
+          return chatCard(context,users.elementAt(index).name,users.elementAt(index).recent,"",0,users.elementAt(index).img,callback,index,root);
         }
     );
   }
@@ -179,11 +191,15 @@ class DataSearch extends SearchDelegate<String>{
         itemCount: suggestions.length,
         itemBuilder: (BuildContext ctxt, int index) {
           if(chat){
-            return chatCard(context,suggestions.elementAt(index).name,suggestions.elementAt(index).recent,query,suggestions.elementAt(index).unread,suggestions.elementAt(index).img);
+            return chatCard(context,suggestions.elementAt(index).name,suggestions.elementAt(index).recent,query,suggestions.elementAt(index).unread,suggestions.elementAt(index).img,callback,index,root);
           }
-          return callCard(context, suggestions.elementAt(index).name, suggestions.elementAt(index).lastCall,query,suggestions.elementAt(index).img);
+          return callCard(context, suggestions.elementAt(index).name, suggestions.elementAt(index).lastCall,query,suggestions.elementAt(index).img,);
         }
     );
   }
+
+  void callback(int i){}
+
+  void root(int i){}
 
 }

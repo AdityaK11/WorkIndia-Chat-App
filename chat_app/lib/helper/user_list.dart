@@ -2,10 +2,14 @@ import 'package:chatapp/models/user_model.dart';
 import 'package:intl/intl.dart';
 
 class UserList{
-  List<User> users = new List<User>();
+  static List<User> users = new List<User>();
+  static int count = 6;
 
-  List<User> getUsers(){
+  UserList(){
+    initialize();
+  }
 
+  void initialize(){
     String currentTime = DateFormat.jm().format(DateTime.now());
 
     users.add(new User("Aditya","images/i1.jpg",currentTime,2,currentTime));
@@ -108,6 +112,10 @@ class UserList{
     users.add(new User("Ayush","images/i8.png",currentTime,0,currentTime));
     users.add(new User("Siddhant","images/i9.jpg",currentTime,0,currentTime));
     users.add(new User("Fardeen","images/i10.jpg",currentTime,0,currentTime));
+  }
+
+
+  List<User> getUsers(){
     return users;
   }
 }

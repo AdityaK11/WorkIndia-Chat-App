@@ -4,11 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:chatapp/widgets/widgets.dart';
 
 class ChatFragment extends StatefulWidget {
+
+  Function root;
+
+  ChatFragment(this.root);
+
   @override
-  _ChatFragmentState createState() => _ChatFragmentState();
+  _ChatFragmentState createState() => _ChatFragmentState(root);
 }
 
 class _ChatFragmentState extends State<ChatFragment> with AutomaticKeepAliveClientMixin<ChatFragment> {
+
+  Function root;
+
+  _ChatFragmentState(this.root);
 
   int page = 1;
   List<User> items = new List<User>();
@@ -28,6 +37,12 @@ class _ChatFragmentState extends State<ChatFragment> with AutomaticKeepAliveClie
     }
 
       isLoading = false;
+    });
+  }
+
+  void callback(int i){
+    setState(() {
+      current.elementAt(i).unread = 0;
     });
   }
 
@@ -63,7 +78,7 @@ class _ChatFragmentState extends State<ChatFragment> with AutomaticKeepAliveClie
             child: ListView.builder(
               itemCount: current.length,
               itemBuilder: (context, index) {
-                return chatCard(context,current.elementAt(index).name,current.elementAt(index).recent,"",current.elementAt(index).unread,current.elementAt(index).img);
+                return chatCard(context,current.elementAt(index).name,current.elementAt(index).recent,"",current.elementAt(index).unread,current.elementAt(index).img,callback,index,root);
               },
             ),
           ),
